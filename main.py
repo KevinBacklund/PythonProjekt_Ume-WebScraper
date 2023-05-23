@@ -1,7 +1,8 @@
 import requests
 import json
+import matplotlib.pyplot as plot
 #requests Get JSON
-#JSON -> list[Dict(år:befolkning)]
+#JSON -> Dict(år:befolkning
 #Dict -> matplotlib graf
 
 def main():
@@ -15,12 +16,12 @@ def main():
     fields = []
     for key in records:
         fields.append(key["fields"])
-    befolkning = []
+    befolkning = {}
     for field in fields:
-        print(field["ar"])
-        print(field["folkmangd"])
-        befolkning.append({field["ar"]:field["folkmangd"]})
+        befolkning.update({field["ar"]:field["folkmangd"]})
     print(befolkning)
-
+    fig, ax = plot.subplots()
+    ax.plot(befolkning.keys(),befolkning.values())
+    plot.show()
 if __name__ == '__main__':
     main()
