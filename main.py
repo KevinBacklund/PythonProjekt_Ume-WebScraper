@@ -11,12 +11,16 @@ def main():
         json.dump(dict, datafh, indent=4)
     with open("befolkning.json") as datafh:
         data = json.load(datafh)
-    for key in data:
-        print(key) 
     records = data["records"]
     fields = []
     for key in records:
         fields.append(key["fields"])
-    print(fields)
+    befolkning = []
+    for field in fields:
+        print(field["ar"])
+        print(field["folkmangd"])
+        befolkning.append({field["ar"]:field["folkmangd"]})
+    print(befolkning)
+
 if __name__ == '__main__':
     main()
