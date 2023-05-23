@@ -20,8 +20,11 @@ def main():
     for field in fields:
         befolkning.update({field["ar"]:field["folkmangd"]})
     print(befolkning)
+    befolkningsorted = {}
+    for a in sorted(befolkning):
+        befolkningsorted.update({a:befolkning[a]})
     fig, ax = plot.subplots()
-    ax.plot(befolkning.keys(),befolkning.values())
+    ax.plot(befolkningsorted.keys(),befolkningsorted.values())
     plot.show()
 if __name__ == '__main__':
     main()
