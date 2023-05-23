@@ -25,6 +25,9 @@ def main():
         befolkningsorted.update({a:befolkning[a]})
     fig, ax = plot.subplots()
     ax.plot(befolkningsorted.keys(),befolkningsorted.values())
+    ax.set_title("Umeå befolkning")
+    ax.set_xlabel("år")
+    ax.set_ylabel("befolkning")
     plot.show()
 if __name__ == '__main__':
     main()
