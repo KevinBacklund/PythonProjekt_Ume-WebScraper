@@ -8,6 +8,8 @@ def main():
     dict = json.loads(req.text)
     with open("befolkning.json","w") as datafh:
         json.dump(dict, datafh, indent=4)
+    print("Tillgänglig data:")
+    printFields()
     while True:
         cmdline = input(">")
         if cmdline != "sluta":
@@ -29,12 +31,7 @@ def graf(befolkningsorted, title):
     plot.show()
 
 def joson_search(searchterm):
-    with open("befolkning.json") as datafh:
-        data = json.load(datafh)
-    records = data["records"]
-    fields = []
-    for key in records:
-        fields.append(key["fields"])
+    fields = FindFields()
     befolkning = {}
     try:
         for field in fields:
@@ -43,6 +40,22 @@ def joson_search(searchterm):
     except KeyError:
         print("Denna data finns inte")
         return "fel"
+
+def FindFields():
+    with open("befolkning.json") as datafh:
+        data = json.load(datafh)
+    records = data["records"]
+    fields = []
+    for key in records:
+        fields.append(key["fields"])
+    return fields
+def printFields():
+    fields = FindFields()
+    fieldstr = ""
+    for field in fields[0].keys():
+        if field != "ar":
+            fieldstr += f"\n{field}"
+    print(fieldstr)
 
 if __name__ == '__main__':
     main()
