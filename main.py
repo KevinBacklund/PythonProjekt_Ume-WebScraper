@@ -8,21 +8,26 @@ def main():
     dict = json.loads(req.text)
     with open("befolkning.json","w") as datafh:
         json.dump(dict, datafh, indent=4)
-    befolkning = joson_search()
-    befolkningsorted = {}
-    for ar in sorted(befolkning):
-        befolkningsorted.update({ar:befolkning[ar]})
-    graf(befolkningsorted)
+    while True:
+        cmdline = input(">")
+        if cmdline != "sluta":
+            befolkning = joson_search(cmdline)
+            befolkningsorted = {}
+            for ar in sorted(befolkning):
+                befolkningsorted.update({ar:befolkning[ar]})
+            graf(befolkningsorted, cmdline)
+        if cmdline == "sluta":
+            break
 
-def graf(befolkningsorted):
+def graf(befolkningsorted, title):
     fig, ax = plot.subplots()
     ax.plot(befolkningsorted.keys(),befolkningsorted.values())
-    ax.set_title("Umeå befolkning")
+    ax.set_title(f"Umeå {title}")
     ax.set_xlabel("år")
     ax.set_ylabel("befolkning")
     plot.show()
 
-def joson_search():
+def joson_search(searchterm):
     with open("befolkning.json") as datafh:
         data = json.load(datafh)
     records = data["records"]
@@ -31,7 +36,7 @@ def joson_search():
         fields.append(key["fields"])
     befolkning = {}
     for field in fields:
-        befolkning.update({field["ar"]:field["folkmangd"]})
+        befolkning.update({field["ar"]:field[searchterm]})
     return befolkning
 
 if __name__ == '__main__':
