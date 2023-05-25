@@ -12,10 +12,11 @@ def main():
         cmdline = input(">")
         if cmdline != "sluta":
             befolkning = joson_search(cmdline)
-            befolkningsorted = {}
-            for ar in sorted(befolkning):
-                befolkningsorted.update({ar:befolkning[ar]})
-            graf(befolkningsorted, cmdline)
+            if befolkning != "fel":
+                befolkningsorted = {}
+                for ar in sorted(befolkning):
+                    befolkningsorted.update({ar:befolkning[ar]})
+                graf(befolkningsorted, cmdline)
         if cmdline == "sluta":
             break
 
@@ -35,9 +36,13 @@ def joson_search(searchterm):
     for key in records:
         fields.append(key["fields"])
     befolkning = {}
-    for field in fields:
-        befolkning.update({field["ar"]:field[searchterm]})
-    return befolkning
+    try:
+        for field in fields:
+            befolkning.update({field["ar"]:field[searchterm]})
+        return befolkning
+    except KeyError:
+        print("Denna data finns inte")
+        return "fel"
 
 if __name__ == '__main__':
     main()
