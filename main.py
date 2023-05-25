@@ -27,7 +27,7 @@ def graf(befolkningsorted, title):
     ax.plot(befolkningsorted.keys(),befolkningsorted.values())
     ax.set_title(f"Umeå {title}")
     ax.set_xlabel("år")
-    ax.set_ylabel("befolkning")
+    ax.set_ylabel(title)
     plot.show()
 
 def joson_search(searchterm):
